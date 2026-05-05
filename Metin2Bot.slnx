@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Metin2Bot.Application/Metin2Bot.Application.csproj" />
+  <Project Path="Metin2Bot.Console/Metin2Bot.Console.csproj" />
+  <Project Path="Metin2Bot.Domain/Metin2Bot.Domain.csproj" />
+  <Project Path="Metin2Bot.Infrastructure/Metin2Bot.Infrastructure.csproj" />
+  <Project Path="Metin2Bot.UI/Metin2Bot.UI.csproj" />
+</Solution>
