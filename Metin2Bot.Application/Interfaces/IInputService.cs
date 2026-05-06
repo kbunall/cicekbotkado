@@ -4,26 +4,36 @@ namespace Metin2Bot.Application.Interfaces
 {
     public interface IInputService
     {
-        /// <summary>
-        /// Belirtilen pencere başlığına sahip pencerenin handle (IntPtr) değerini bulur.
-        /// </summary>
-        /// <param name="windowTitle">Pencere başlığı.</param>
-        /// <returns>Pencere handle değeri.</returns>
         IntPtr FindWindow(string windowTitle);
 
         /// <summary>
-        /// Belirtilen koordinatlara arka planda sol tıklama yapar.
+        /// PostMessage tabanlı background click. Pencere arka planda olsa bile çalışır;
+        /// foreground gerektirmez.
         /// </summary>
-        /// <param name="handle">Pencere handle değeri.</param>
-        /// <param name="x">X koordinatı.</param>
-        /// <param name="y">Y koordinatı.</param>
         void BackgroundClick(IntPtr handle, int x, int y);
 
         /// <summary>
-        /// Belirtilen tuşu arka planda gönderir.
+        /// Foreground gerçek mouse tıklaması (mouse_event/SendInput). Pencerenin önde olduğu varsayılır.
         /// </summary>
-        /// <param name="handle">Pencere handle değeri.</param>
-        /// <param name="keyCode">Tuş kodu (Virtual Key Code).</param>
+        void ForegroundClick(int screenX, int screenY);
+
+        /// <summary>
+        /// İnsan benzeri tıklama: smooth cursor hareketi + parametrik click hold süresi.
+        /// Pencerenin foreground olduğu varsayılır.
+        /// </summary>
+        void HumanClick(int screenX, int screenY, int clickDurationMs);
+
+        /// <summary>
+        /// Mouse button'larını zorla release eder. Önceki bir tıklamadan kalan basılı state'i sıfırlar.
+        /// </summary>
+        void ReleaseMouseButtons(IntPtr handle = default);
+
         void BackgroundKeyPress(IntPtr handle, int keyCode);
+
+        /// <summary>
+        /// Diagnostic log callback. BotEngine her tıklamanın detaylarını (target HWND, foreground HWND,
+        /// lParam) buraya akıtır. Null bırakılırsa logging yok.
+        /// </summary>
+        Action<string>? DiagnosticsLog { get; set; }
     }
 }
